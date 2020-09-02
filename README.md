@@ -1,4 +1,4 @@
-Python wrapper for PyV8
+Python wrapper for PyV8.
 The library provides an interface for precompile, compile and run JS code in Python
 
 ### Install:
