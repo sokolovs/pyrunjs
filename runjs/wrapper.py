@@ -11,10 +11,10 @@ from .exceptions import ArgumentError, JSFunctionNotExists
 
 logger = logging.getLogger(__name__)
 
-__all__ = ['JSEvalWrapper', ]
+__all__ = ['JSRunWrapper', ]
 
 
-class JSEvalWrapper(object):
+class JSRunWrapper(object):
     """ Wrapper class for PyV8 """
 
     def __init__(self, js_code='', js_libs=[], js_libs_code={}):

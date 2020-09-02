@@ -59,7 +59,7 @@ class ExampleObject(object):
 
 exo = ExampleObject()
 
-js = JSEvalWrapper(
+js = JSRunWrapper(
     js_code,
     js_libs=['/path/to/mylib.js', '/path/to/lib2.js'],
     js_libs_code={'mylib.js': js_lib_code})
