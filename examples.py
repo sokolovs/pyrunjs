@@ -1,13 +1,3 @@
-Python wrapper for PyV8
-The library provides an interface for precompile, compile and run JS code in Python
-
-### Install:
-```
-pip install --upgrade git+https://github.com/sokolovs/pyrunjs.git
-```
-
-### Example:
-```python
 # -*- coding: utf-8 -*-
 from runjs import *
 
@@ -79,4 +69,3 @@ print js.run(func='global_example1')
 print js.run(func='global_example2')
 print js.run(func='global_example3')
 print js.run(func='global_example4')
-```
