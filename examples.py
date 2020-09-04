@@ -49,8 +49,8 @@ class ExampleObject(object):
 
 exo = ExampleObject()
 
-js = JSRunWrapper(
-    js_code,
+js = JSRunWrapper.factory(
+    js_code=js_code,
     js_libs=['/path/to/mylib.js', '/path/to/lib2.js'],
     js_libs_code={'mylib.js': js_lib_code})
 
@@ -61,10 +61,10 @@ js.set_global_var('gvar3', {'key3': 'value3', 'key4': 'value3'})
 js.set_global_var('gvar4', exo)
 
 # Call JS functions
-print js.run(func='hello_value', args=[125])
-print js.run(func='hello_list', args=[[10, 11, 12, 13, 14, 15, 16], ])
-print js.run(func='hello_dict', args=[{'key4': 'value5', 'key5': 'value5'}, ])
-print js.run(func='hello_object', args=[exo, ])
+print js.run(func='hello_value', fargs=[125])
+print js.run(func='hello_list', fargs=[[10, 11, 12, 13, 14, 15, 16], ])
+print js.run(func='hello_dict', fargs=[{'key4': 'value5', 'key5': 'value5'}, ])
+print js.run(func='hello_object', fargs=[exo, ])
 print js.run(func='global_example1')
 print js.run(func='global_example2')
 print js.run(func='global_example3')
