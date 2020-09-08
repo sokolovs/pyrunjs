@@ -7,7 +7,6 @@ import subprocess
 from tempfile import NamedTemporaryFile
 
 from .abstract import AbstractBackend
-from .jsonable import Jsonable
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +29,7 @@ class NodeJSBackend(AbstractBackend):
 
         :raise SyntaxError: JS syntax error
         """
-        cdir = os.path.dirname(os.path.abspath(__file__))
+        cdir = os.path.abspath(os.path.dirname(__file__) + '/../data')
         include_lib = cdir + '/include.js'
 
         script_code = ''
