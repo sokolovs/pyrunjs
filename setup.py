@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import find_packages, setup
+from setuptools import find_packages, setup
 
 setup(
     name='pyrunjs',
