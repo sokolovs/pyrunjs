@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from distutils.core import find_packages, setup
 
 setup(
     name='pyrunjs',
@@ -8,6 +8,6 @@ setup(
     author='Sergey V. Sokolov',
     author_email='sergey.sokolov@air-bit.eu',
     url='https://github.com/sokolovs/pyrunjs',
-    packages=['runjs'],
+    packages=find_packages(exclude=['examples']),
     install_requires=['PyV8'],
 )
