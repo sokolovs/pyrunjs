@@ -13,6 +13,8 @@ __all__ = ['PyV8Backend', ]
 class PyV8Backend(AbstractBackend):
     """ Backend class for PyV8 """
     logger = logging.getLogger(__name__)
+    can_precompile = True
+    can_run_str = True
 
     def run(
             self, func=None, fargs=[], precompil_only=False,

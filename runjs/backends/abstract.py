@@ -2,6 +2,7 @@
 import logging
 import os
 import os.path
+import tempfile
 
 from collections import OrderedDict
 
@@ -13,6 +14,8 @@ __all__ = ['AbstractBackend', ]
 class AbstractBackend(object):
     """ Abstract class for run JS backend """
     logger = logging.getLogger(__name__)
+    can_precompile = False  # the backend can precompile
+    can_run_str = False  # the backend can execute code from string
 
     def __init__(self, js_code='', js_libs=[], js_libs_code={}):
         """
@@ -38,16 +41,27 @@ class AbstractBackend(object):
             self.logger.error(err)
             raise ArgumentError(err)
 
-        for lib_file in self.js_libs:
-            lib_file = os.path.abspath(lib_file)
-            if os.path.isfile(lib_file) and os.access(lib_file, os.R_OK):
-                lib_code = open(lib_file).read()
-                self.js_libs_code[os.path.basename(lib_file)] = lib_code
-            else:
-                self.logger.error('Can not read JS library file: %s' % lib_file)
+        if self.can_run_str:
+            for lib_file in self.js_libs:
+                lib_file = os.path.abspath(lib_file)
+                if os.path.isfile(lib_file) and os.access(lib_file, os.R_OK):
+                    lib_code = open(lib_file).read()
+                    self.js_libs_code[os.path.basename(lib_file)] = lib_code
+                else:
+                    self.logger.error(
+                        'Can not read JS library file: %s' % lib_file)
 
-        for js_lib, js_code in js_libs_code.items():
-            self.js_libs_code[js_lib] = js_code
+            for js_lib, js_code in js_libs_code.items():
+                self.js_libs_code[js_lib] = js_code
+        else:
+            # Write libs to files
+            for js_lib, js_code in js_libs_code.items():
+                tmpdir = tempfile.mkdtemp()
+                js_lib_path = tmpdir + '/' + js_lib
+                js_lib_file = open(js_lib_path, 'w')
+                js_lib_file.write(js_code)
+                js_lib_file.close()
+                self.js_libs.append(js_lib_path)
 
         if self.js_code:
             self.js_libs_code['main'] = self.js_code
