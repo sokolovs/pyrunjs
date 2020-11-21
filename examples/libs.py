@@ -16,4 +16,4 @@ js = JSRunWrapper.factory(
     js_libs=['./base64-binary.js', './cbor.js'])
 
 # Call JS functions
-print js.run(func='decode_cbor')
+print(js.run(func='decode_cbor'))

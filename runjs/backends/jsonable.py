@@ -24,7 +24,8 @@ class Jsonable(object):
                 if hasattr(value, 'pop'):
                     a = []
                     for subval in value:
-                        if hasattr(subval, '__iter__'):
+                        is_str = isinstance(subval, str)
+                        if hasattr(subval, '__iter__') and not is_str:
                             a.append(dict(subval))
                         else:
                             a.append(subval)

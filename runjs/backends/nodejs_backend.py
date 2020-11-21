@@ -19,15 +19,15 @@ class NodeJSBackend(AbstractBackend):
     can_precompile = False
     can_run_str = False
 
-    def run(self, func, fargs=[]):
+    def run(self, func=None, fargs=[]):
         """
         Run JS code with libraries and return result as
             Python unicode string or as dict
 
-        :param str func: JS function name
+        :param str func: (optional) JS function name
         :param list fargs: (optional) list of JS function args
 
-        :raise SyntaxError: JS syntax error
+        :raise SyntaxError: JS syntax error or runtime error
         """
         cdir = os.path.abspath(os.path.dirname(__file__) + '/../data')
         include_lib = cdir + '/include.js'
@@ -68,16 +68,18 @@ class NodeJSBackend(AbstractBackend):
             if i < fargs_len - 1:
                 fargs_str += ', '
 
-        func_call = 'var __func_call_res = %s(%s);\n'
-        func_call += 'process.stdout.write(JSON.stringify(__func_call_res));\n'
-        script_code += func_call % (func, fargs_str)
+        if func is not None:
+            func_call = 'var __func_call_res = %s(%s);\n'
+            func_call += (
+                'process.stdout.write(JSON.stringify(__func_call_res));\n')
+            script_code += func_call % (func, fargs_str)
 
         logger.debug('JS source code:')
         logger.debug(script_code)
 
         # Write script code to file
         script_code_file = NamedTemporaryFile(delete=False, suffix='-main.js')
-        script_code_file.write(script_code)
+        script_code_file.write(script_code.encode())
         script_code_file.close()
 
         # Run script code
