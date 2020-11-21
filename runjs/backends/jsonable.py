@@ -8,7 +8,7 @@ class Jsonable(object):
     def __iter__(self):
         merged = self.__class__.__dict__.copy()
         merged.update(self.__dict__)
-        for attr, value in merged.iteritems():
+        for attr, value in merged.items():
             if attr.startswith('_'):
                 continue
             if callable(getattr(self, attr)):
