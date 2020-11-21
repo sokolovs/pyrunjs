@@ -87,7 +87,7 @@ class NodeJSBackend(AbstractBackend):
             result = subprocess.check_output(['nodejs', script_code_file.name])
             return self._get_py_obj(result)
         except subprocess.CalledProcessError as e:
-            raise SyntaxError(e.message)
+            raise SyntaxError(e.output)
 
     def _get_js_obj(self, obj):
         if hasattr(obj, '__dict__'):
