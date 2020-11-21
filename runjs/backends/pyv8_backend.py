@@ -113,7 +113,7 @@ class PyV8Backend(AbstractBackend):
             for key in obj.keys():
                 try:
                     js_obj[key] = self._get_js_obj(ctx, obj[key])
-                except Exception, e:
+                except Exception as e:
                     if (not str(e).startswith('Python argument types in')):
                         raise
                     import unicodedata

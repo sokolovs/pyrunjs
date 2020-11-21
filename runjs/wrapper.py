@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from backends import NodeJSBackend, PyV8Backend
+from .backends import NodeJSBackend, PyV8Backend
 
 logger = logging.getLogger(__name__)
 
