@@ -10,5 +10,5 @@ setup(
     url='https://github.com/sokolovs/pyrunjs',
     packages=find_packages(exclude=['examples']),
     package_data={'runjs': ['data/*.*']},
-    install_requires=['PyV8'],
+    install_requires=[],
 )
