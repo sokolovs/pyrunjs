@@ -2,7 +2,10 @@
 import logging
 from collections import OrderedDict
 
-import PyV8
+try:
+    import PyV8
+except:
+    pass
 
 from .abstract import AbstractBackend
 from .exceptions import ArgumentError, JSFunctionNotExists
