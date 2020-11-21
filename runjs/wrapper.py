@@ -13,6 +13,17 @@ class JSRunWrapper(object):
 
     @staticmethod
     def factory(backend='pyv8', js_code='', js_libs=[], js_libs_code={}):
+        """
+        Create instance
+
+        :param str backend: (optional) backend name ('pyv8' or 'nodejs')
+        :param str js_code: (optional) main source code
+        :param list js_libs: (optional) list of paths to files with libraries
+        :param dict js_libs_code: (optional) dict of libraries code, key is
+            library name (ex: lib.js), value is source code
+
+        :raise ValueError: invalid backend
+        """
         if backend == 'nodejs':
             return NodeJSBackend(js_code, js_libs, js_libs_code)
         elif backend == 'pyv8':
