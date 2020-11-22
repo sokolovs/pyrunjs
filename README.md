@@ -3,7 +3,7 @@ The library provides an interface un JS code in Python (optional: precompile and
 
 ### Install:
 ```
-pip install --upgrade git+https://github.com/sokolovs/pyrunjs.git
+pip install --upgrade -e git+https://github.com/sokolovs/pyrunjs.git#egg=pyrunjs
 ```
 
 ### Example:
