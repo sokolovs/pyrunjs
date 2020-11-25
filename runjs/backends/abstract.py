@@ -27,7 +27,7 @@ class AbstractBackend(object):
             `value` is source code
         """
         self.js_code = js_code
-        self.js_libs = js_libs
+        self.js_libs = js_libs if js_libs else []
         self.js_libs_code = OrderedDict()
         self.js_global_vars = OrderedDict()
 
