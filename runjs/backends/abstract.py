@@ -29,6 +29,7 @@ class AbstractBackend(object):
         self.js_code = js_code
         self.js_libs = js_libs if js_libs else []
         self.js_libs_code = OrderedDict()
+        self.js_libs_tmpdir = None
         self.js_global_vars = OrderedDict()
 
         if not isinstance(self.js_libs, (list, tuple)):
@@ -56,8 +57,8 @@ class AbstractBackend(object):
         else:
             # Write libs to files
             for js_lib, js_code in js_libs_code.items():
-                tmpdir = tempfile.mkdtemp()
-                js_lib_path = tmpdir + '/' + js_lib
+                self.js_libs_tmpdir = tempfile.mkdtemp()
+                js_lib_path = self.js_libs_tmpdir + '/' + js_lib
                 js_lib_file = open(js_lib_path, 'w')
                 js_lib_file.write(js_code)
                 js_lib_file.close()

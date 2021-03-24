@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import os
 import os.path
+import shutil
 import subprocess
 
 from tempfile import NamedTemporaryFile
@@ -83,12 +85,17 @@ class NodeJSBackend(AbstractBackend):
         script_code_file.close()
 
         # Run script code
+        result = None
         try:
             result = subprocess.check_output(
                 ['nodejs', script_code_file.name], stderr=subprocess.STDOUT)
-            return self._get_py_obj(result)
         except subprocess.CalledProcessError as e:
             raise SyntaxError(e.output.decode())
+        finally:
+            os.unlink(script_code_file.name)
+            if self.js_libs_tmpdir is not None:
+                shutil.rmtree(self.js_libs_tmpdir, ignore_errors=True)
+        return self._get_py_obj(result)
 
     def _get_js_obj(self, obj):
         if hasattr(obj, '__dict__'):
