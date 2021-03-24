@@ -99,3 +99,7 @@ print(js.run(func='global_example1'))
 print(js.run(func='global_example2'))
 print(js.run(func='global_example3'))
 print(js.run(func='global_example4'))
+
+# For nodejs (delete temporary library files only once)
+# Required If the library code is passed as a string
+js.delete_lib_tempdir()
