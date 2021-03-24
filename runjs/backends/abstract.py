@@ -2,6 +2,7 @@
 import logging
 import os
 import os.path
+import shutil
 import tempfile
 
 from collections import OrderedDict
@@ -110,6 +111,13 @@ class AbstractBackend(object):
         :param str name: variable name for deleting
         """
         return self.delete_global_vars((name, ))
+
+    def delete_lib_tempdir(self):
+        """
+        Delete the temporary directory created for the libraries
+        """
+        if self.js_libs_tmpdir is not None:
+            shutil.rmtree(self.js_libs_tmpdir, ignore_errors=True)
 
     def run(self, *args, **kwargs):
         raise NotImplementedError('Subclasses must override `run()`')

@@ -3,7 +3,6 @@ import json
 import logging
 import os
 import os.path
-import shutil
 import subprocess
 
 from tempfile import NamedTemporaryFile
@@ -93,8 +92,6 @@ class NodeJSBackend(AbstractBackend):
             raise SyntaxError(e.output.decode())
         finally:
             os.unlink(script_code_file.name)
-            if self.js_libs_tmpdir is not None:
-                shutil.rmtree(self.js_libs_tmpdir, ignore_errors=True)
         return self._get_py_obj(result)
 
     def _get_js_obj(self, obj):
