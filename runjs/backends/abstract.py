@@ -56,8 +56,8 @@ class AbstractBackend(object):
                 self.js_libs_code[js_lib] = js_code
         else:
             # Write libs to files
+            self.js_libs_tmpdir = tempfile.mkdtemp()
             for js_lib, js_code in js_libs_code.items():
-                self.js_libs_tmpdir = tempfile.mkdtemp()
                 js_lib_path = self.js_libs_tmpdir + '/' + js_lib
                 js_lib_file = open(js_lib_path, 'w')
                 js_lib_file.write(js_code)
