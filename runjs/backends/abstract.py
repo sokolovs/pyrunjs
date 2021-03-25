@@ -68,6 +68,10 @@ class AbstractBackend(object):
         if self.js_code:
             self.js_libs_code['main'] = self.js_code
 
+    def __del__(self):
+        # Delete the temporary directory created for the libraries
+        self.delete_lib_tempdir()
+
     def set_global_vars(self, js_vars):
         """
         Set variables for pass to JS global context
