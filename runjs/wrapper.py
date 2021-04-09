@@ -16,7 +16,7 @@ class JSRunWrapper(object):
         """
         Create instance
 
-        :param str backend: (optional) backend name ('pyv8', 'v8' or 'nodejs')
+        :param str backend: (optional) backend name ('pyv8', 'pyduk' or 'nodejs')
         :param str js_code: (optional) main source code
         :param list js_libs: (optional) list of paths to files with libraries
         :param dict js_libs_code: (optional) dict of libraries code, key is
