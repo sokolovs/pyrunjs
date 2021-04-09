@@ -1,0 +1,2 @@
+git+git://github.com/ConsonantSpork/cmake-build-extension@d3f7b01#egg=cmake-build-extension
+git+https://gitlab.com/ConsonantSpork/pyduk@0.1#egg=pyduk
