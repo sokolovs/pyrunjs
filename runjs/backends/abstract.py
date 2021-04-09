@@ -2,6 +2,7 @@
 import logging
 import os
 import os.path
+import shutil
 import tempfile
 
 from collections import OrderedDict
@@ -29,6 +30,7 @@ class AbstractBackend(object):
         self.js_code = js_code
         self.js_libs = js_libs if js_libs else []
         self.js_libs_code = OrderedDict()
+        self.js_libs_tmpdir = None
         self.js_global_vars = OrderedDict()
 
         if not isinstance(self.js_libs, (list, tuple)):
@@ -55,9 +57,9 @@ class AbstractBackend(object):
                 self.js_libs_code[js_lib] = js_code
         else:
             # Write libs to files
+            self.js_libs_tmpdir = tempfile.mkdtemp()
             for js_lib, js_code in js_libs_code.items():
-                tmpdir = tempfile.mkdtemp()
-                js_lib_path = tmpdir + '/' + js_lib
+                js_lib_path = self.js_libs_tmpdir + '/' + js_lib
                 js_lib_file = open(js_lib_path, 'w')
                 js_lib_file.write(js_code)
                 js_lib_file.close()
@@ -65,6 +67,10 @@ class AbstractBackend(object):
 
         if self.js_code:
             self.js_libs_code['main'] = self.js_code
+
+    def __del__(self):
+        # Delete the temporary directory created for the libraries
+        self.delete_lib_tempdir()
 
     def set_global_vars(self, js_vars):
         """
@@ -109,6 +115,13 @@ class AbstractBackend(object):
         :param str name: variable name for deleting
         """
         return self.delete_global_vars((name, ))
+
+    def delete_lib_tempdir(self):
+        """
+        Delete the temporary directory created for the libraries
+        """
+        if self.js_libs_tmpdir is not None:
+            shutil.rmtree(self.js_libs_tmpdir, ignore_errors=True)
 
     def run(self, *args, **kwargs):
         raise NotImplementedError('Subclasses must override `run()`')
