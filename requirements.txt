@@ -1,0 +1,1 @@
+pyduk @ git+https://github.com/ConsonantSpork/pyduk@0.1
