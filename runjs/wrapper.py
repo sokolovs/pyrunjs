@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from .backends import NodeJSBackend, PyV8Backend, PydukBackend
+from .backends import NodeJSBackend, PyV8Backend, PydukBackend, PyV8NewBackend
 
 logger = logging.getLogger(__name__)
 
@@ -30,4 +30,6 @@ class JSRunWrapper(object):
             return PyV8Backend(js_code, js_libs, js_libs_code)
         elif backend == 'pyduk':
             return PydukBackend(js_code, js_libs, js_libs_code)
+        elif backend == 'pyv8_new':
+            return PyV8NewBackend(js_code, js_libs, js_libs_code)
         raise ValueError('Invalid backend passed to `factory()`')
