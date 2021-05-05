@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+# !!! Note: the object must be converted to a dictionary before
+# !!! JSON serialization
 import decimal
 from datetime import date, datetime, time
+
+
+__all__ = ('Jsonable', )
 
 
 class Jsonable(object):
@@ -13,24 +18,29 @@ class Jsonable(object):
                 continue
             if callable(getattr(self, attr)):
                 continue
-            if isinstance(value, (date, datetime, time)):
-                iso = value.isoformat()
-                yield attr, iso
-            elif type(value).__name__ in ('property', 'cached_property'):
-                yield attr, value.__get__(value, value.__class__)
-            elif isinstance(value, decimal.Decimal):
-                yield attr, str(value)
-            elif hasattr(value, '__iter__'):
-                if hasattr(value, 'pop'):
-                    a = []
-                    for subval in value:
-                        is_str = isinstance(subval, str)
-                        if hasattr(subval, '__iter__') and not is_str:
-                            a.append(dict(subval))
-                        else:
-                            a.append(subval)
-                    yield attr, a
-                else:
-                    yield attr, dict(value)
+            yield attr, self.value_to_json(value)
+
+    @staticmethod
+    def value_to_json(value):
+        if isinstance(value, str):
+            return value
+        elif isinstance(value, (date, datetime, time)):
+            return value.isoformat()
+        elif type(value).__name__ in ('property', 'cached_property'):
+            return value.__get__(value, value.__class__)
+        elif isinstance(value, decimal.Decimal):
+            return str(value)
+        elif hasattr(value, '__iter__'):
+            if isinstance(value, (list, tuple)):
+                a = []
+                for subval in value:
+                    a.append(Jsonable.value_to_json(subval))
+                return a
             else:
-                yield attr, value
+                dv = dict(value)
+                d = {}
+                for k in dv:
+                    d[k] = Jsonable.value_to_json(dv[k])
+                return d
+        else:
+            return value
