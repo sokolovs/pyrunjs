@@ -10,5 +10,8 @@ setup(
     url='https://github.com/sokolovs/pyrunjs',
     packages=find_packages(exclude=['examples']),
     package_data={'runjs': ['data/*.*']},
-    install_requires=[],
+    install_requires=['pyduk @ git+https://github.com/ConsonantSpork/pyduk@0.1.1',
+                      'pyv8 @ git+https://github.com/ConsonantSpork/pyv8@prebuilt-ubuntu-x64-0.1.1'],
+    dependency_links=['git+https://github.com/ConsonantSpork/pyduk@0.1.1#egg=pyduk',
+                      'git+https://github.com/ConsonantSpork/pyv8@prebuilt-ubuntu-x64-0.1.1#egg=pyv8'],
 )

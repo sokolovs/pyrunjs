@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from .backends import NodeJSBackend, PyV8Backend
+from .backends import NodeJSBackend, PyV8Backend, PydukBackend, PyV8NewBackend
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ class JSRunWrapper(object):
         """
         Create instance
 
-        :param str backend: (optional) backend name ('pyv8' or 'nodejs')
+        :param str backend: (optional) backend name ('pyv8', 'pyduk' or 'nodejs')
         :param str js_code: (optional) main source code
         :param list js_libs: (optional) list of paths to files with libraries
         :param dict js_libs_code: (optional) dict of libraries code, key is
@@ -28,4 +28,8 @@ class JSRunWrapper(object):
             return NodeJSBackend(js_code, js_libs, js_libs_code)
         elif backend == 'pyv8':
             return PyV8Backend(js_code, js_libs, js_libs_code)
+        elif backend == 'pyduk':
+            return PydukBackend(js_code, js_libs, js_libs_code)
+        elif backend == 'pyv8_new':
+            return PyV8NewBackend(js_code, js_libs, js_libs_code)
         raise ValueError('Invalid backend passed to `factory()`')
