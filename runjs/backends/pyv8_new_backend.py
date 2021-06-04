@@ -17,6 +17,7 @@ class PyV8NewBackend(AbstractBackend):
 
     def run(self, func=None, fargs=[]):
         instance = V8Instance()
+        instance.run("var global = new Function('return this;')();")
         code = ''
         for k, v in self.js_global_vars.items():
             code += f'var {k} = {self._get_js_obj(v)};\n';
