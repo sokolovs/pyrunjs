@@ -1,7 +1,10 @@
 import json
 import os
 
-import pyduk
+try:
+    import pyduk
+except ImportError:
+    pass
 
 from .abstract import AbstractBackend
 

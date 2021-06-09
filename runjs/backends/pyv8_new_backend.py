@@ -1,6 +1,9 @@
 import json
 
-from pyv8 import *
+try:
+    from pyv8 import *
+except ImportError:
+    pass
 from runjs.backends.abstract import AbstractBackend
 
 V8Initializer.get_instance()
