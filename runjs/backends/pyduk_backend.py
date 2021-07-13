@@ -59,6 +59,6 @@ class PydukBackend(AbstractBackend):
         except IOError as err:
             raise RuntimeError from IOError
         except pyduk.JSRuntimeError as err:
-            raise JSRuntimeException(str(err), err.stacktrace) from err
+            raise JSRuntimeException(str(err), err.traceback) from err
         except pyduk.ConversionError as err:
             raise JSConversionException from err

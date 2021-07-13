@@ -12,6 +12,6 @@ setup(
     package_data={'runjs': ['data/*.*']},
     install_requires=['pyduk @ git+https://gitlab.com/air_bit/pyduk@0.2.0',
                       'pyv8 @ git+https://gitlab.com/air_bit/pyv8@prebuilt-ubuntu-x64-0.2.0'],
-    dependency_links=['git+https://gitlab.com/airb_bit/pyduk@0.2.0#egg=pyduk',
+    dependency_links=['git+https://gitlab.com/air_bit/pyduk@0.2.0#egg=pyduk',
                       'git+https://gitlab.com/air_bit/pyv8@prebuilt-ubuntu-x64-0.2.0#egg=pyv8'],
 )

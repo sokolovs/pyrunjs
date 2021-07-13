@@ -15,9 +15,9 @@ class JSFunctionNotExists(JSException):
 class JSRuntimeException(JSException):
     """Javascript runtime exception with a stacktrace."""
 
-    def __init__(self, msg, stacktrace):
+    def __init__(self, msg, traceback):
         self.msg = msg
-        self.stacktrace = stacktrace
+        self.traceback = traceback
         super().__init__()
 
 
