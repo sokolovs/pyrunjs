@@ -22,7 +22,7 @@ class PydukBackend(AbstractBackend):
         return json.dumps(obj)
 
     def _run_unprotected(self, func=None, fargs=None):
-        ctx = pyduk.Context(pyduk.USE_GLOBAL_POLYFILL)
+        ctx = pyduk.Context(use_global_polyfill=True)
         for k, v in self.js_global_vars.items():
             ctx.run(f'var {k} = {self._get_js_obj(v)}')
 
