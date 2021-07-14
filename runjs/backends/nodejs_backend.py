@@ -7,6 +7,7 @@ import subprocess
 
 from tempfile import NamedTemporaryFile
 
+from runjs.backends.exceptions import JSRuntimeException
 from .abstract import AbstractBackend
 
 logger = logging.getLogger(__name__)
@@ -89,7 +90,7 @@ class NodeJSBackend(AbstractBackend):
             result = subprocess.check_output(
                 ['nodejs', script_code_file.name], stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise SyntaxError(e.output.decode())
+            raise JSRuntimeException('JavaScript error', str(e.output.decode())) from e
         finally:
             os.unlink(script_code_file.name)
         return self._get_py_obj(result)
