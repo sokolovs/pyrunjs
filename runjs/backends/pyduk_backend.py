@@ -1,7 +1,12 @@
 import json
 import os
 
-import pyduk
+from .exceptions import JSConversionException, JSRuntimeException
+
+try:
+    import pyduk
+except ImportError:
+    pass
 
 from .abstract import AbstractBackend
 
@@ -17,7 +22,7 @@ class PydukBackend(AbstractBackend):
         return json.dumps(obj)
 
     def _run_unprotected(self, func=None, fargs=None):
-        ctx = pyduk.Context(pyduk.USE_GLOBAL_POLYFILL)
+        ctx = pyduk.Context(use_global_polyfill=True)
         for k, v in self.js_global_vars.items():
             ctx.run(f'var {k} = {self._get_js_obj(v)}')
 
@@ -39,17 +44,21 @@ class PydukBackend(AbstractBackend):
     def run(self, func=None, fargs=None):
         """
         run js code with libraries and return result as
-            python string or as dict
+            python type
 
         :param str func: (optional) js function name
         :param list fargs: (optional) list of js function args
 
-        :raise syntaxerror: js syntax error or runtime error
+        :raise JSRuntimeException: js runtime error
+        :raise JSCoversionError: js conversion error
+        :raise RuntimeError
         """
 
         try:
             return self._run_unprotected(func, fargs)
         except IOError as err:
             raise RuntimeError from IOError
-        except (pyduk.JSRuntimeError, pyduk.ConversionError) as err:
-            raise SyntaxError from err
+        except pyduk.JSRuntimeError as err:
+            raise JSRuntimeException(str(err), err.traceback) from err
+        except pyduk.ConversionError as err:
+            raise JSConversionException from err
