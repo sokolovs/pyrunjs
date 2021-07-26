@@ -17,6 +17,9 @@ __all__ = ['PydukBackend']
 class PydukBackend(AbstractBackend):
     """This backend uses pyduk."""
 
+    can_run_str = True
+    can_precompile = False
+
     def _get_js_obj(self, obj):
         if hasattr(obj, '__dict__'):
             obj = dict(obj)
