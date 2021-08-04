@@ -61,4 +61,4 @@ class PyV8NewBackend(AbstractBackend):
         except IOError as err:
             raise RuntimeError from IOError
         except pyv8.V8Error as err:
-            raise JSRuntimeException(str(err), err.traceback) from err
+            raise JSRuntimeException(str(err), err.wrapped.traceback) from err

@@ -6,6 +6,7 @@ from .exceptions import JSConversionException, JSRuntimeException
 try:
     import pyduk
 except ImportError:
+    print("Could not import pyduk")
     pass
 
 from .abstract import AbstractBackend
@@ -15,6 +16,9 @@ __all__ = ['PydukBackend']
 
 class PydukBackend(AbstractBackend):
     """This backend uses pyduk."""
+
+    can_run_str = True
+    can_precompile = False
 
     def _get_js_obj(self, obj):
         if hasattr(obj, '__dict__'):
@@ -59,6 +63,6 @@ class PydukBackend(AbstractBackend):
         except IOError as err:
             raise RuntimeError from IOError
         except pyduk.JSRuntimeError as err:
-            raise JSRuntimeException(str(err), err.traceback) from err
+            raise JSRuntimeException(str(err), err.wrapped.traceback) from err
         except pyduk.ConversionError as err:
             raise JSConversionException from err
