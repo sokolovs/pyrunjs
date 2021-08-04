@@ -1,2 +1,2 @@
-pyduk @ git+https://git.air-bit.eu/airbit/pyduk@0.2.1
-pyv8 @ git+https://git.air-bit.eu/airbit/pyv8@prebuilt-ubuntu-x64-0.2.1
+-e git+https://git.air-bit.eu/airbit/pyduk@0.2.1#egg=pyduk
+-e git+https://git.air-bit.eu/airbit/pyv8@prebuilt-ubuntu-x64-0.2.1#egg=pyv8
